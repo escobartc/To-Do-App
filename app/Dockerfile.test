@@ -1,0 +1,19 @@
+# Dockerfile.test
+
+FROM node:14-alpine3.14
+
+# Install dependencies
+RUN apk update \
+    && apk add --no-cache python2 g++ make \
+    && yarn global add jest
+
+WORKDIR /app
+
+# Copy application code and test files
+COPY . .
+
+# Install all dependencies (including devDependencies)
+RUN yarn install
+
+# Run tests
+CMD ["yarn", "test"]
